@@ -37,7 +37,7 @@ function App() {
             <h1>
               {alb?.album_name}
             </h1>
-            <img src={alb.album_imgs} alt={vinyl}></img>
+            <img className="w-[10vw]"src={alb.album_imgs} alt={vinyl}></img>
             <h2>
               {alb?.artist}
             </h2>
