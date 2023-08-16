@@ -3,6 +3,7 @@ import './App.css';
 import { Auth } from './components/auth';
 import { db } from './config/firebase';
 import { getDocs, collection, query, limit, where} from 'firebase/firestore';
+import vinyl from "./images/vinyl.png"
 function App() {
   const[albumList, setAlbumList] = useState([]);
   const albumCollectionsRef = collection(db, "albums");
@@ -19,7 +20,7 @@ function App() {
   
   async function getRandomRow(){
     const randomNum = Math.floor(Math.random()*2000)
-    const albumsQuery = query(albumCollectionsRef, where("pos", "==", randomNum),limit(1)); // Limit the query to 2 albums
+    const albumsQuery = query(albumCollectionsRef, where("pos", "==", randomNum),limit(1)); // Limit the query to 1 album
     const data = await getDocs(albumsQuery)
     const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
     return filteredData
@@ -36,6 +37,7 @@ function App() {
             <h1>
               {alb?.album_name}
             </h1>
+            <img src={alb.album_imgs} alt={vinyl}></img>
             <h2>
               {alb?.artist}
             </h2>
