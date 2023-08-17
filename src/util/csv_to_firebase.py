@@ -9,7 +9,9 @@ db = firestore.client()
 csv_path = r"C:\Users\jiyon\Desktop\Programming_projects\albummatchup\src\util\spotify_data.csv"
 with open (csv_path, "r", encoding="utf-8") as csv_file:
     reader = csv.DictReader(csv_file)
-    for row in reader:
+    for index, row in enumerate(reader):
+        if index == 500:  # get the top 500 most popular albums
+            break
         data = {
                 'pos': int(row['pos']),
                 'album_name': row['album_name'],
