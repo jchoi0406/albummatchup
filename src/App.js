@@ -4,6 +4,7 @@ import { Auth } from './components/auth';
 import { db } from './config/firebase';
 import { getDocs, collection, query, limit, where} from 'firebase/firestore';
 import { DisplayAlbum } from './components/Album';
+
 function App() {
   const[albumList, setAlbumList] = useState([]);
   const albumCollectionsRef = collection(db, "albums");
@@ -35,7 +36,7 @@ function App() {
   return (
     <div className="App">
       {/* <Auth/> */}
-      {score}
+      <h1>Score: {score}</h1>
       {<DisplayAlbum albumList={albumList} setScore={setScore}/>}
     </div>
   );
