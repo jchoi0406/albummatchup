@@ -36,8 +36,8 @@ function App() {
   return (
     <div className="App">
       {/* <Auth/> */}
-      <h1>Score: {score}</h1>
-      {<DisplayAlbum albumList={albumList} setScore={setScore}/>}
+      <h1>Score: {score?score:0}</h1>
+      {<DisplayAlbum albumList={albumList} score={score} setScore={setScore}/>}
     </div>
   );
 }
