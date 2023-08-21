@@ -9,6 +9,7 @@ function App() {
   const[albumList, setAlbumList] = useState([]);
   const albumCollectionsRef = collection(db, "albums");
   const [score, setScore] = useState(0);
+  let randomAlbumNum = null;
 
   useEffect(()=>{
     const getAlbumList = async() =>{
@@ -26,7 +27,12 @@ function App() {
   
   async function getRandomRow(){
     const albumNum = 500;
-    const randomNum = Math.floor(Math.random()*albumNum) 
+    let randomNum;
+    do{
+      randomNum = Math.floor(Math.random()*albumNum);
+
+    }while (randomAlbumNum == randomNum);
+    randomAlbumNum = randomNum;
     const albumsQuery = query(albumCollectionsRef, where("pos", "==", randomNum),limit(1)); // Limit the query to 1 album
     const data = await getDocs(albumsQuery)
     const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -34,11 +40,16 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className="min-h-screen flex items-center justify-center">
       {/* <Auth/> */}
-      <h1>Score: {score?score:0}</h1>
       {<DisplayAlbum albumList={albumList} score={score} setScore={setScore}/>}
+        <div className='absolute'>
+          <h1 className='bg-white'>
+            Score: {score?score:0}
+          </h1>
+        </div>
     </div>
+
   );
 }
 

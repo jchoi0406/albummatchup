@@ -39,3 +39,6 @@ button:active{
   background-color: #4682A9;
 
 }
+.relative:hover img {
+  filter: brightness(100%);
+}
