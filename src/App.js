@@ -44,7 +44,7 @@ function App() {
       {/* <Auth/> */}
       {<DisplayAlbum albumList={albumList} score={score} setScore={setScore}/>}
         <div className='absolute'>
-          <h1 className='bg-white'>
+          <h1 className='bg-black text-white'>
             Score: {score?score:0}
           </h1>
         </div>
