@@ -9,6 +9,7 @@ function App() {
   const[albumList, setAlbumList] = useState([]);
   const albumCollectionsRef = collection(db, "albums");
   const [score, setScore] = useState(0);
+  const [correct, setCorrect] = useState(null);
   let randomAlbumNum = null;
 
   useEffect(()=>{
@@ -42,12 +43,10 @@ function App() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       {/* <Auth/> */}
-      {<DisplayAlbum albumList={albumList} score={score} setScore={setScore}/>}
-        <div className='absolute'>
-          <h1 className='bg-black text-white'>
-            Score: {score?score:0}
-          </h1>
-        </div>
+      {<DisplayAlbum albumList={albumList} score={score} setScore={setScore} setCorrect={setCorrect}/>}
+      <div className='absolute bg-black text-white'>
+      {correct !== null ? (correct ? "Correct" : "Incorrect!") : null}
+      </div>
     </div>
 
   );
