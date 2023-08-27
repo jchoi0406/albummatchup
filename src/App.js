@@ -12,7 +12,7 @@ function App() {
   const [correct, setCorrect] = useState(null);
   let prevAlbumNum = null;
   const [isPhone, setIsPhone] = useState(window.innerWidth <= 480); // breakpoint width for phones 
-  const imgDimension = isPhone ? "h-[50vh]":"w-[50vw] h-[100vh]"; // heights and widths for images depending on phone or not.
+  const imgDimension = isPhone ? "w-[100vw] h-[50vh]":"w-[50vw] h-auto"; // heights and widths for images depending on phone or not.
   useEffect(()=>{  // this useEffect is for checking if the user's screen width changes.
     function updateIsPhone(){
       setIsPhone(window.innerWidth<=480);
@@ -53,7 +53,7 @@ function App() {
     const albumNum = 500;
     let randomNum;
     do{
-      randomNum = Math.floor(Math.random()*albumNum);
+      randomNum = Math.floor(Math.random()*albumNum)+1;
     }while (randomNum == prevAlbumNum);
     prevAlbumNum = randomNum;
     const albumsQuery = query(albumCollectionsRef, where("pos", "==", randomNum),limit(1)); // Limit the query to 1 album
