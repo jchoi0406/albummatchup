@@ -11,8 +11,19 @@ function App() {
   const [score, setScore] = useState(0);
   const [correct, setCorrect] = useState(null);
   let prevAlbumNum = null;
+  const [isPhone, setIsPhone] = useState(window.innerWidth <= 480); // breakpoint width for phones 
+  const imgDimension = isPhone ? "h-[50vh]":"w-[50vw] h-[100vh]"; // heights and widths for images depending on phone or not.
+  useEffect(()=>{  // this useEffect is for checking if the user's screen width changes.
+    function updateIsPhone(){
+      setIsPhone(window.innerWidth<=480);
+    }
+    window.addEventListener("resize", updateIsPhone);
+    return()=>{
+      window.removeEventListener("resize", updateIsPhone);
+    };
 
-  useEffect(()=>{
+  }, [])
+  useEffect(()=>{ // for getting albums from the database
     const getAlbumList = async() =>{
       //READ DATA FROM DB
       try {
@@ -54,7 +65,7 @@ function App() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       {/* <Auth/> */}
-      {<DisplayAlbum albumList={albumList} setAlbumList={setAlbumList} score={score} setScore={setScore} setCorrect={setCorrect}/>}
+      {<DisplayAlbum albumList={albumList} setAlbumList={setAlbumList} score={score} setScore={setScore} setCorrect={setCorrect} imgDimension={imgDimension} isPhone={isPhone}/>}
       <div className='absolute bg-black text-white'>
       {correct !== null ? (correct ? "Correct" : "Incorrect!") : null}
       </div>
