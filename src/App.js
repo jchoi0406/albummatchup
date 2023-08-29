@@ -13,6 +13,8 @@ function App() {
   let prevAlbumNum = null;
   const [isPhone, setIsPhone] = useState(window.innerWidth <= 480); // breakpoint width for phones 
   const imgDimension = isPhone ? "w-[100vw] h-[50vh]":"w-[50vw] h-auto"; // heights and widths for images depending on phone or not.
+  const scoreDimension = isPhone ? "w-[15vw] h-[15vw]":"w-[5vw] h-[5vw]"; // heights and widthd for score depending on phone or not.
+  const correctColor = correct ? "bg-green-500": "bg-red-500";
   useEffect(()=>{  // this useEffect is for checking if the user's screen width changes.
     function updateIsPhone(){
       setIsPhone(window.innerWidth<=480);
@@ -66,8 +68,8 @@ function App() {
     <div className="min-h-screen flex items-center justify-center">
       {/* <Auth/> */}
       {<DisplayAlbum albumList={albumList} setAlbumList={setAlbumList} score={score} setScore={setScore} setCorrect={setCorrect} imgDimension={imgDimension} isPhone={isPhone}/>}
-      <div className='absolute bg-black text-white'>
-      {correct !== null ? (correct ? "Correct" : "Incorrect!") : null}
+      <div className={`${scoreDimension} flex flex-col justify-center text-center rounded-full absolute ${correct === null ? "bg-white": correctColor} text-black text-3xl transition-colors duration-1000`}>
+        {score === null ? 0:score}
       </div>
     </div>
 
