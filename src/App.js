@@ -10,7 +10,7 @@ import {
 
 function App() {
   return (
-    <div>
+    <div className="flex flex-col justify-center items-center h-screen w-screen">
       <BrowserRouter>
         <Routes>
           <Route path="/albummatchup" element={<Home/>}></Route>
