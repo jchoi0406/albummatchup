@@ -4,17 +4,17 @@ import { useState } from "react";
 export const DisplayAlbum = (props) => {
     const delayTime = 1500;
     const [scoreVisible, setScoreVisibile] = useState(false);
-    const [dummyScore, setDummyScore] = useState(0);
+    const [dummyScore, setDummyScore] = useState(null);
     const animationDuration = 1000;
 
     function handleScore(selectedAlbum){
         if (props.albumList){
             const leftAlbum = props.albumList[0];
             const rightAlbum = props.albumList[1];
-            setScoreVisibile(true);
             scoreAnimation(rightAlbum.pos)
-            const timer = setTimeout(()=>{
 
+            setScoreVisibile(true);
+            const timer = setTimeout(()=>{
               if (selectedAlbum === "left" && leftAlbum.pos < rightAlbum.pos){
                   props.setScore((prev)=>prev+1)
                   props.setCorrect(true);
@@ -28,6 +28,7 @@ export const DisplayAlbum = (props) => {
                   props.setScore((prev)=>prev===0 ? null: 0);
                   props.setCorrect(false);
               }
+
               setScoreVisibile(false);
             }, delayTime)
         }
@@ -49,6 +50,7 @@ export const DisplayAlbum = (props) => {
         }
       }
       animate();
+      setScoreVisibile(false);  // set false before reveal
     } 
 
 
@@ -64,6 +66,7 @@ export const DisplayAlbum = (props) => {
                     <h1 className="font-bold text-sm sm:text-base md:text-2xl">{alb?.album_name}</h1>
                     <h2 className="font-semibold text-2rem">{alb?.artist}</h2>
                     <h1 className="font-semibold">{index === 0 ? `Rank: ${alb.pos}` : ""}</h1>
+                    {console.log(scoreVisible)}
                     <h1 className={`font-semibold transition-opacity duration-${animationDuration} ease-in-out opacity-${scoreVisible?"100":"0"}`}>{index === 1 ? `Rank: ${dummyScore}` : ""}</h1>
                   </div>
                 </div>
