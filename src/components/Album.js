@@ -1,13 +1,20 @@
 import React from "react";
 import vinyl from "../images/vinyl.png"
-
+import { useState } from "react";
 export const DisplayAlbum = (props) => {
-    const delayTime = 500;
+    const delayTime = 1500;
+    const [scoreVisible, setScoreVisibile] = useState(false);
+    const [dummyScore, setDummyScore] = useState(0);
+    const animationDuration = 1000;
+
     function handleScore(selectedAlbum){
         if (props.albumList){
             const leftAlbum = props.albumList[0];
             const rightAlbum = props.albumList[1];
+            setScoreVisibile(true);
+            scoreAnimation(rightAlbum.pos)
             const timer = setTimeout(()=>{
+
               if (selectedAlbum === "left" && leftAlbum.pos < rightAlbum.pos){
                   props.setScore((prev)=>prev+1)
                   props.setCorrect(true);
@@ -21,14 +28,32 @@ export const DisplayAlbum = (props) => {
                   props.setScore((prev)=>prev===0 ? null: 0);
                   props.setCorrect(false);
               }
-              }, delayTime)
-
+              setScoreVisibile(false);
+            }, delayTime)
         }
 
     }
+    function scoreAnimation(score){  // animation to reveal the right album.
+      const animationSteps = 50;  // number of steps for animation 
+      const stepInterval = animationDuration / animationSteps;  // number of 'frames'
+      const increment = Math.floor(score / animationSteps);  // score increment floor used so rank is an integer
+      let currentScore = 0;
+      const animate = () =>{
+        if (currentScore < score){  // base case
+          setDummyScore(currentScore);
+          currentScore += increment;
+          setTimeout(animate, stepInterval);  // recursive function
+        }
+        else{
+          setDummyScore(score);  
+        }
+      }
+      animate();
+    } 
+
+
     return (
       <div className={props.isPhone ? 'flex flex-col justify-center min-h-screen' :'flex flex-row justify-start'}>
-        {console.log(props.isPhone)}
         {props.albumList &&
           props.albumList.map((alb, index) => (
             <div className="cursor-pointer" key={alb?.id} onClick={() => index === 0 ? handleScore("left") : handleScore("right")}>
@@ -39,6 +64,7 @@ export const DisplayAlbum = (props) => {
                     <h1 className="font-bold text-sm sm:text-base md:text-2xl">{alb?.album_name}</h1>
                     <h2 className="font-semibold text-2rem">{alb?.artist}</h2>
                     <h1 className="font-semibold">{index === 0 ? `Rank: ${alb.pos}` : ""}</h1>
+                    <h1 className={`font-semibold transition-opacity duration-${animationDuration} ease-in-out opacity-${scoreVisible?"100":"0"}`}>{index === 1 ? `Rank: ${dummyScore}` : ""}</h1>
                   </div>
                 </div>
               </div>
