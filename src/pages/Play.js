@@ -10,7 +10,6 @@ export default function Play(props){
     const albumCollectionsRef = collection(db, "albums");
     const [score, setScore] = useState(0);
     const [correct, setCorrect] = useState(null);
-    let prevAlbumNum = null;
     const imgDimension = props.isPhone ? "w-[100vw]":"w-[50vw] h-auto"; // heights and widths for images depending on phone or not.
     const scoreDimension = props.isPhone ? "w-[15vw] h-[15vw]":"w-[5vw] h-[5vw]"; // heights and widthd for score depending on phone or not.
     const correctColor = correct ? "bg-green-500": "bg-red-500"; // change score background color
@@ -19,12 +18,14 @@ export default function Play(props){
       const getAlbumList = async() =>{
         //READ DATA FROM DB
         try {
-          let album1;
-          let album2;
-  
+          let album1 = 0
+          let album2 = 0
+        
           if (!correct){
-            album1 = await getRandomRow();
-            album2 = await getRandomRow();
+            do{
+              album1 = await getRandomRow();
+              album2 = await getRandomRow();
+            } while(album1[0].id === album2[0].id)
           }
           else{
             album1 = [albumList[1]];
@@ -42,11 +43,7 @@ export default function Play(props){
     
     async function getRandomRow(){
       const albumNum = 500;
-      let randomNum;
-      do{
-        randomNum = Math.floor(Math.random()*albumNum)+1;
-      }while (randomNum == prevAlbumNum);
-      prevAlbumNum = randomNum;
+      const randomNum = Math.floor(Math.random()*albumNum)+1;
       const albumsQuery = query(albumCollectionsRef, where("pos", "==", randomNum),limit(1)); // Limit the query to 1 album
       const data = await getDocs(albumsQuery)
       const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));

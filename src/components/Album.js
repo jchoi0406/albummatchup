@@ -31,7 +31,7 @@ export const DisplayAlbum = (props) => {
         {console.log(props.isPhone)}
         {props.albumList &&
           props.albumList.map((alb, index) => (
-            <div className="border-2 cursor-pointer" key={alb?.id} onClick={() => index === 0 ? handleScore("left") : handleScore("right")}>
+            <div className="cursor-pointer" key={alb?.id} onClick={() => index === 0 ? handleScore("left") : handleScore("right")}>
               <div className="relative">
                 <img className={`${props.imgDimension}transition duration-300 filter brightness-75`} src={alb && alb?.album_imgs === "no-img" ? vinyl : alb?.album_imgs} alt="" />
                 <div className="absolute inset-0 flex items-center justify-center">
