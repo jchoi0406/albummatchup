@@ -4,7 +4,7 @@ import { useState } from "react";
 export const DisplayAlbum = (props) => {
     const delayTime = 1500;
     const [scoreVisible, setScoreVisibile] = useState(false);
-    const [dummyScore, setDummyScore] = useState(null);
+    const [dummyScore, setDummyScore] = useState(0);
     const animationDuration = 1000;
 
     function handleScore(selectedAlbum){
@@ -37,7 +37,7 @@ export const DisplayAlbum = (props) => {
     function scoreAnimation(score){  // animation to reveal the right album.
       const animationSteps = 50;  // number of steps for animation 
       const stepInterval = animationDuration / animationSteps;  // number of 'frames'
-      const increment = Math.floor(score / animationSteps);  // score increment floor used so rank is an integer
+      const increment = Math.ceil(score / animationSteps);  // score increment needs to be an integer greater than 0
       let currentScore = 0;
       const animate = () =>{
         if (currentScore < score){  // base case
@@ -50,7 +50,6 @@ export const DisplayAlbum = (props) => {
         }
       }
       animate();
-      setScoreVisibile(false);  // set false before reveal
     } 
 
 
@@ -66,8 +65,8 @@ export const DisplayAlbum = (props) => {
                     <h1 className="font-bold text-sm sm:text-base md:text-2xl">{alb?.album_name}</h1>
                     <h2 className="font-semibold text-2rem">{alb?.artist}</h2>
                     <h1 className="font-semibold">{index === 0 ? `Rank: ${alb.pos}` : ""}</h1>
-                    {console.log(scoreVisible)}
-                    <h1 className={`font-semibold transition-opacity duration-${animationDuration} ease-in-out opacity-${scoreVisible?"100":"0"}`}>{index === 1 ? `Rank: ${dummyScore}` : ""}</h1>
+                    {console.log(dummyScore)}
+                    <h1 className={`font-semibold transition-opacity duration-${animationDuration} ease-in-out ${scoreVisible?'opacity-1':'opacity-0'}`}>{index === 1 ? `Rank: ${dummyScore}` : ""}</h1>
                   </div>
                 </div>
               </div>
