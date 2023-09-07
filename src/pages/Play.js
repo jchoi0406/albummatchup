@@ -14,9 +14,8 @@ export default function Play(props){
     const imgDimension = props.isPhone ? "w-[100vw]":"w-[50vw] h-auto"; // heights and widths for images depending on phone or not.
     const scoreDimension = props.isPhone ? "w-[15vw] h-[15vw]":"w-[5vw] h-[5vw]"; // heights and widthd for score depending on phone or not.
     const correctColor = correct ? "bg-green-500": "bg-red-500"; // change score background color
-    const cookieScore = Cookies.get("score");
+    const cookieScore = isNaN(Cookies.get("score")) ? Cookies.set('score', 0): Cookies.get('score');
     useEffect(()=>{
-      console.log(score)
       console.log(Cookies.get('score'))
       Cookies.set('score', `${Math.max(Cookies.get('score'), score)}`, {expires: 999});
     }, [cookieScore, score])
