@@ -4,6 +4,7 @@ import { db } from '../config/firebase';
 import { getDocs, collection, query, limit, where} from 'firebase/firestore';
 import { DisplayAlbum } from '../components/Album';
 import { useEffect, useState } from 'react';
+import Cookies from "js-cookie";
 
 export default function Play(props){
     const[albumList, setAlbumList] = useState([]);
@@ -13,7 +14,12 @@ export default function Play(props){
     const imgDimension = props.isPhone ? "w-[100vw]":"w-[50vw] h-auto"; // heights and widths for images depending on phone or not.
     const scoreDimension = props.isPhone ? "w-[15vw] h-[15vw]":"w-[5vw] h-[5vw]"; // heights and widthd for score depending on phone or not.
     const correctColor = correct ? "bg-green-500": "bg-red-500"; // change score background color
-
+    const cookieScore = Cookies.get("score");
+    useEffect(()=>{
+      console.log(score)
+      console.log(Cookies.get('score'))
+      Cookies.set('score', `${Math.max(Cookies.get('score'), score)}`, {expires: 999});
+    }, [cookieScore, score])
     useEffect(()=>{ // for getting albums from the database
       const getAlbumList = async() =>{
         //READ DATA FROM DB
@@ -52,11 +58,25 @@ export default function Play(props){
   
     return (
       <div className="min-h-screen flex items-center justify-center">
-        {/* <Auth/> */}
         {<DisplayAlbum albumList={albumList} setAlbumList={setAlbumList} score={score} setScore={setScore} setCorrect={setCorrect} imgDimension={imgDimension} isPhone={props.isPhone}/>}
-        <div className={`${scoreDimension} flex flex-col justify-center text-center rounded-full absolute ${correct === null ? "bg-white": correctColor} text-black text-3xl transition-colors duration-500`}>
-          {score === null ? 0:score}
+        <div className="absolute flex flex-col justify-center items-center">
+          <div className={`${scoreDimension} flex flex-col justify-center items-center text-center rounded-full whitespace-nowrap relative ${correct === null ? "bg-white": correctColor} text-black text-3xl transition-colors duration-500`}>
+            <p className="">
+              OR
+            </p>
+            <div className="absolute mt-[20vh] flex flex-col items-center text-white">
+              <div className=" flex text-lg font-semibold">
+                Score: {score === null ? 0:score}
+              </div>
+              <div className="flex text-lg font-semibold">
+                High Score: {cookieScore}
+              </div>
+            </div>
+            
+          </div>
+          
         </div>
+
       </div>
   
     );

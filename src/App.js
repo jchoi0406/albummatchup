@@ -2,7 +2,6 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import Play from './pages/Play';
 import Home from './pages/Home';
-
 import {
   BrowserRouter,
   Routes,
