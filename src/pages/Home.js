@@ -1,10 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Auth } from "../components/auth";
 import {FaGithub, FaLinkedin} from "react-icons/fa";
 export default function Home(props){
-    const navigate = useNavigate();
-    const titleDimension = props.isPhone ? "text-[2em]": "text-[4em]";
+    const navigate = useNavigate();  
+    const titleDimension = props.isPhone ? "text-[2em]": "text-[4em]";  
     return (
         <div>
             asd
@@ -21,7 +20,10 @@ export default function Home(props){
                     <h3 className="mb-2">
                         A game of higher or lower using rateyourmusic album ranks. Album rating data from October 2021.
                     </h3>
-                    <button className="text-lg mb-5" onClick={()=>{navigate("/albummatchup/play")}}>
+                    <p>
+                        How to play: Click on whichever album (left or right) you think is higher rated on rateyourmusic.com        
+                    </p>
+                    <button className="text-lg mb-5 mt-5" onClick={()=>{navigate("/albummatchup/play")}}>
                         Play
                     </button>
                 </div>
@@ -29,7 +31,7 @@ export default function Home(props){
                 <div className="flex flex-row justify-center mb-10">
                     <hr color="black" width="50%"></hr>
                     <a href="https://github.com/jchoi0406">
-                        <FaGithub size="1.5em"/>
+                        <FaGithub size="1.5em"/>  
                     </a>
                     <a href="https://www.linkedin.com/in/jiyong-choi-740a68235/">
                         <FaLinkedin size="1.5em"/>

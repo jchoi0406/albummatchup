@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {getAuth, GoogleAuthProvider} from 'firebase/auth';
 import {getFirestore, getFireStore} from "firebase/firestore";
-
+// Firebase setup
 const firebaseConfig = {
   apiKey: "AIzaSyBjYj0UUm1toDx3AOzEhT8dHeV0p1Pdkfg",
   authDomain: "albummatchup.firebaseapp.com",

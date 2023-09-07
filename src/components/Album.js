@@ -2,18 +2,17 @@ import React, { useEffect, useTransition } from "react";
 import vinyl from "../images/vinyl.png"
 import { useState } from "react";
 export const DisplayAlbum = (props) => {
-    const delayTime = 1500;
-    const [scoreVisible, setScoreVisibile] = useState(false);
-    const [dummyScore, setDummyScore] = useState(0);
-    const animationDuration = 1000;
+    const delayTime = 1500;  // delay before next albums are requested
+    const [scoreVisible, setScoreVisibile] = useState(false);  // for the 'right' album to hide rank
+    const [dummyScore, setDummyScore] = useState(0);  // dummy score is for the rank animation
+    const animationDuration = 1000;  // 1 second
     function handleScore(selectedAlbum){
         if (props.albumList){
             const leftAlbum = props.albumList[0];
             const rightAlbum = props.albumList[1];
-            scoreAnimation(rightAlbum.pos)
-
-            setScoreVisibile(true);
-            const timer = setTimeout(()=>{
+            scoreAnimation(rightAlbum.pos)  // start score animation
+            setScoreVisibile(true);  // set rank visible
+            const timer = setTimeout(()=>{  // delay before next albums
               if (selectedAlbum === "left" && leftAlbum.pos < rightAlbum.pos){
                   props.setScore((prev)=>prev+1)
                   props.setCorrect(true);
