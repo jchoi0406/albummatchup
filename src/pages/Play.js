@@ -1,13 +1,10 @@
 import React from "react";
-import { db } from '../config/firebase';
-import { getDocs, collection, query, limit, where} from 'firebase/firestore';
 import { DisplayAlbum } from '../components/Album';
 import { useEffect, useState } from 'react';
 import Cookies from "js-cookie";
-
+import {getRandomRow} from "../util/firebase.js"
 export default function Play(props){
     const[albumList, setAlbumList] = useState([]);  // two albums grabbed from database
-    const albumCollectionsRef = collection(db, "albums");  // 
     const [score, setScore] = useState(0);  //s core
     const [correct, setCorrect] = useState(null);  // correct/incorrect guess
     const imgDimension = props.isPhone ? "w-[100vw]":"w-[50vw] h-auto"; // heights and widths for images depending on phone or not.
@@ -44,14 +41,7 @@ export default function Play(props){
       getAlbumList();
     }, [score])
     
-    async function getRandomRow(){
-      const albumNum = 500;  // number of albums in database
-      const randomNum = Math.floor(Math.random()*albumNum)+1;  // +1 becvause the rank starts from 1 not 0
-      const albumsQuery = query(albumCollectionsRef, where("pos", "==", randomNum),limit(1)); // Limit the query to 1 album
-      const data = await getDocs(albumsQuery)
-      const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-      return filteredData
-    }
+
   
     return (
       <div className="min-h-screen flex items-center justify-center">

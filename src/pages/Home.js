@@ -6,7 +6,6 @@ export default function Home(props){
     const titleDimension = props.isPhone ? "text-[2em]": "text-[4em]";  
     return (
         <div>
-            asd
             <div className="flex flex-col justify-between min-h-screen text-center items-center p-[18vh]">
                 <div className="">
                     <h1 className={`${titleDimension} font-semibold mb-4 border-4 border-black p-2`}>ALBUMMATCHUP</h1>
